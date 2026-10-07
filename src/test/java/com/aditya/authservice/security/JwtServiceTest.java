@@ -30,8 +30,13 @@ class JwtServiceTest {
 
     @Test
     void tamperedTokenIsRejected() {
-        JwtService service = new JwtService(SECRET, 60_000);
-        String token = service.generateToken(user) + "x";
-        assertFalse(service.isValid(token, user));
+       JwtService service = new JwtService(SECRET, 60_000);
+        String token = service.generateToken(user);
+        String[] parts = token.split("\\.");
+        // change the payload so the signature no longer matches
+        char first = parts[1].charAt(0);
+        String tamperedPayload = (first == 'A' ? 'B' : 'A') + parts[1].substring(1);
+        String tampered = parts[0] + "." + tamperedPayload + "." + parts[2];
+        assertFalse(service.isValid(tampered, user));
     }
 }
