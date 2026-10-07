@@ -15,6 +15,7 @@
     <description>JWT authentication and role-based authorization service</description>
     <properties>
         <java.version>17</java.version>
+        <lombok.version>1.18.38</lombok.version>
     </properties>
     <dependencies>
         <dependency>
